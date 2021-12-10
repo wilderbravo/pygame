@@ -43,6 +43,13 @@ fuente = pygame.font.Font(None, 36)
 # Usamos esta variable booleana para avisar que el juego se acabó variable.
 game_over = False;
 
+#Cargar sonido 
+pygame.mixer.music.load('Resources/Audio/Fondo_Musical.mp3')
+pygame.mixer.music.set_endevent(pygame.constants.USEREVENT)
+pygame.mixer.music.play()
+
+click_sound = pygame.mixer.Sound("Resources/Audio/Laser1.ogg")
+
 # Cargar imagen de pelota
 pelota = pygame.image.load("Resources/Img/pelota1.png").convert()
 pelota = pygame.transform.scale(pelota, (50, 50))
@@ -73,8 +80,10 @@ while not hecho:
        # Rebota el rectángulo, si hace falta.
         if rect_y > 450 or rect_y < 0:
             rect_cambio_y = rect_cambio_y * -1
+            click_sound.play()
         if rect_x > 650 or rect_x < 0:
             rect_cambio_x = rect_cambio_x * -1
+            click_sound.play()
      
     # --- Dibuja el marco
  
@@ -87,7 +96,7 @@ while not hecho:
  
     if game_over:
         # Si el juego finalizó, dibujamos 'el juego se acabó'.
-        texto = fuente.render("Game Over", True, BLANCO)
+        texto = fuente.render("Game Over", True, NEGRO)
         texto_rect = texto.get_rect()
         texto_x = pantalla.get_width() / 2 - texto_rect.width / 2
         texto_y = pantalla.get_height() / 2 - texto_rect.height / 2
